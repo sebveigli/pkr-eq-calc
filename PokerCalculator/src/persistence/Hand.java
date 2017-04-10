@@ -1,35 +1,59 @@
 package persistence;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Hand {
-	private Rank firstRank;
-	private Rank secondRank;
-	private Suit firstSuit;
-	private Suit secondSuit;
+	private Card firstCard;
+	private Card secondCard;
+
+	public Hand(Card first, Card second) {
+		this.firstCard = first;
+		this.secondCard = second;
+	}
 	
-	public Hand() {
+
+	public Set<Card> getHand() {
+		Set<Card> hand = new HashSet<Card>();
 		
+		hand.add(firstCard);
+		hand.add(secondCard);
+		
+		return hand;
 	}
 	
-	public Hand(Rank rank1, Suit suit1, Rank rank2, Suit suit2) {
-		this.firstRank = rank1;
-		this.firstSuit = suit1;
-		this.secondRank = rank2;
-		this.secondSuit = suit2;
+	
+	public Card getFirstCard() {
+		return this.firstCard;
 	}
 	
-	public char getFirstRank() {
-		return firstRank.getCardChar();
+	public Card getSecondCard() {
+		return this.secondCard;
 	}
 	
-	public char getFirstSuit() {
-		return firstSuit.getSuitChar();
+	public String getFirstRank() {
+		return Byte.toString(firstCard.getRankAsByte());
 	}
 	
-	public char getSecondRank() {
-		return secondRank.getCardChar();
+	public byte getFirstRankAsByte() {
+		return firstCard.getRankAsByte();
 	}
 	
-	public char getSecondSuit() {
-		return secondSuit.getSuitChar();
+	@Override
+	public boolean equals(Object hand) {
+		if (hand == null) {
+			return false;
+		}
+	
+		
+		Hand inputHand = (Hand)hand;
+		
+		if ((inputHand.getFirstCard().equals(getFirstCard()) && inputHand.getSecondCard().equals(getSecondCard())) ||
+				inputHand.getFirstCard().equals(getSecondCard()) && inputHand.getSecondCard().equals(getFirstCard())) {
+			System.out.println("Not Unique!");
+			return true;
+		}
+		return false;
 	}
+
 }

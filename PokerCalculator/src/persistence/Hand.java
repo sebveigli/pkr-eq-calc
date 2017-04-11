@@ -8,8 +8,8 @@ public class Hand {
 	private Card secondCard;
 
 	public Hand(Card first, Card second) {
-		this.firstCard = first;
-		this.secondCard = second;
+			firstCard = first;
+			secondCard = second;
 	}
 	
 

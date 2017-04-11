@@ -1,15 +1,10 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import persistence.Card;
-import persistence.Deck;
 import persistence.Hand;
 import persistence.Rank;
 import persistence.Suit;

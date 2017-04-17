@@ -2,6 +2,8 @@ package model;
 
 import java.util.Set;
 
+import persistence.Board;
+import persistence.Card;
 import persistence.Hand;
 
 public abstract class Parser {

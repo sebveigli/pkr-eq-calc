@@ -7,11 +7,11 @@ import org.junit.Test;
 import model.HandParserUtil;
 import model.InvalidHandException;
 
-public class HandParserTester {
+public class SuitedHandTest {
 
 	@Test
 	public void correctHandTest() throws InvalidHandException {
-		HandParserUtil.parseRange("AA");
+		HandParserUtil.parseRange("AcKc, JdTd, 6s3s, Ah3h");
 	}
 	
 	@Test
@@ -21,7 +21,7 @@ public class HandParserTester {
 	
 	@Test(expected = InvalidHandException.class) 
 	public void pairIncorrectCardsTest() throws InvalidHandException {
-		HandParserUtil.parseRange("BB");
+		HandParserUtil.parseRange("");
 	}
 	
 	@Test(expected = InvalidHandException.class)

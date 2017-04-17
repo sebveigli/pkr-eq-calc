@@ -29,7 +29,7 @@ public class HandParser extends Parser {
 			Card secondCard = new Card(Rank.parse(input.charAt(2)), Suit.parse(input.charAt(3)));
 			handToReturn.add(new Hand(firstCard, secondCard));
 		} catch (InvalidHandException e) {
-			return Collections.emptySet();
+			throw new InvalidHandException();
 		}
 		return handToReturn;
 	}

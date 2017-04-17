@@ -8,6 +8,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import persistence.Board;
+import persistence.Card;
 import persistence.Hand;
 
 public class HandParserUtil {
@@ -20,6 +22,7 @@ public class HandParserUtil {
 		parsers.add(new SuitedParser());
 		parsers.add(new PairRangeParser());
 		parsers.add(new PairPlusParser());
+		parsers.add(new HandParser());
 		
 		String fInput = formatInput(input);
 		
@@ -28,11 +31,11 @@ public class HandParserUtil {
 				try {
 					return p.parse(fInput);
 				} catch (InvalidHandException e) {
-					return Collections.emptySet();
+					throw new InvalidHandException();
 				}
 			}
 		}
-		return Collections.emptySet();
+		throw new InvalidHandException();
 	}
 	
 	public static Set<Hand> parseRange(String input) throws InvalidHandException {
@@ -46,6 +49,20 @@ public class HandParserUtil {
 			rangeToParse.addAll(parse(it.next()));
 		}
 		return rangeToParse;
+	}
+	
+	public static Board parseBoard(String input) throws InvalidHandException {
+		BoardParser parser = new BoardParser();
+		
+		String fInput = formatInput(input);
+		
+		if (parser.matches(fInput)) {
+			try {
+				return new Board(parser.parseBoard(fInput));
+			} catch (InvalidHandException e) {
+				throw new InvalidHandException();
+			}
+		} else throw new InvalidHandException();
 	}
 	
 	final static private String formatInput(String input) {

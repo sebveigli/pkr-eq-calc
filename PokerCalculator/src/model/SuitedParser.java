@@ -32,7 +32,7 @@ public class SuitedParser extends Parser {
 				
 				handToReturn.add(new Hand(firstCard, secondCard));
 			} catch (InvalidHandException e) {
-				return Collections.emptySet();
+				throw new InvalidHandException();
 			}	
 		}
 		return handToReturn;

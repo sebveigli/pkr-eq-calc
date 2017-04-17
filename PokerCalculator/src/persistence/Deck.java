@@ -17,7 +17,6 @@ public class Deck {
 	private Set<Card> muckedDeck = new HashSet<Card>();
 	
 	public Deck() throws InvalidHandException {
-		final long start = System.nanoTime();
 		List<Card> tmpDeck = new ArrayList<Card>();
 		
 		for (int i = 1; i <= 4; i++) {
@@ -26,7 +25,9 @@ public class Deck {
 			}
 		}
 		
-		tmpDeck = shuffle(tmpDeck);
+		for (int i = 0; i < 7; i++) {
+			tmpDeck = shuffle(tmpDeck);
+		}
 		
 		deck = new LinkedHashSet<Card>(tmpDeck);			
 	}
@@ -40,6 +41,15 @@ public class Deck {
 		return deck;
 	}
 	
+	public void muckCards(Set<Card> c) {
+		for (Card cur : c) {
+			if (deck.contains(cur)) {
+				deck.remove(cur);
+				muckedDeck.add(cur);
+			}
+		}
+	}
+	
 	public void muckCard(Card c) {
 		if (deck.contains(c)) {
 			deck.remove(c);
@@ -51,4 +61,22 @@ public class Deck {
 		return muckedDeck;
 	}
 	
+	public void muckHand(Hand h) {
+		if (deck.contains(h.getFirstCard())) {
+			deck.remove(h.getFirstCard());
+			muckedDeck.add(h.getFirstCard());
+		}
+		
+		if (deck.contains(h.getSecondCard())) {
+			deck.remove(h.getSecondCard());
+			muckedDeck.add(h.getSecondCard());
+		}
+	}
+	
+	public void removeFromMuck(Card c) {
+		if (muckedDeck.contains(c)) {
+			deck.add(c);
+			muckedDeck.remove(c);
+		}
+	}
 }

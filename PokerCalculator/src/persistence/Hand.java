@@ -31,12 +31,36 @@ public class Hand {
 		return this.secondCard;
 	}
 	
-	public String getFirstRank() {
-		return Byte.toString(firstCard.getRankAsByte());
+	public String getSecondRank() {
+		return Character.toString(secondCard.getRankAsChar());
 	}
 	
 	public byte getFirstRankAsByte() {
 		return firstCard.getRankAsByte();
+	}
+	
+	public String getFirstRank() {
+		return Character.toString(firstCard.getRankAsChar());
+	}
+	
+	public byte getSecondRankAsByte() {
+		return secondCard.getRankAsByte();
+	}
+	
+	public byte getFirstSuitAsByte() {
+		return firstCard.getSuitAsByte();
+	}
+	
+	public byte getSecondSuitAsByte() {
+		return secondCard.getSuitAsByte();
+	}
+	
+	public String getFirstSuit() {
+		return Character.toString(firstCard.getSuitAsChar());
+	}
+	
+	public String getSecondSuit() {
+		return Character.toString(secondCard.getSuitAsChar());
 	}
 	
 	@Override

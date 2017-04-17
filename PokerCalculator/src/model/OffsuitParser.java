@@ -31,7 +31,7 @@ public class OffsuitParser extends Parser{
 						
 						handToReturn.add(new Hand(first, second));
 					} catch (InvalidHandException e) {
-						return Collections.emptySet();
+						throw new InvalidHandException();
 					}	
 				}
 			}

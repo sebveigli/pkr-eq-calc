@@ -7,7 +7,7 @@ import org.junit.Test;
 import model.HandParserUtil;
 import model.InvalidHandException;
 
-public class HandParserTester {
+public class TwoCardParseTest {
 
 	@Test
 	public void correctHandTest() throws InvalidHandException {

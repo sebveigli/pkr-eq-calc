@@ -1,6 +1,8 @@
 package persistence;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Hand {
@@ -13,8 +15,8 @@ public class Hand {
 	}
 	
 
-	public Set<Card> getHand() {
-		Set<Card> hand = new HashSet<Card>();
+	public List<Card> getHand() {
+		List<Card> hand = new ArrayList<Card>();
 		
 		hand.add(firstCard);
 		hand.add(secondCard);
@@ -63,21 +65,65 @@ public class Hand {
 		return Character.toString(secondCard.getSuitAsChar());
 	}
 	
+	public List<Card> getSortedHand() {
+		List<Card> sortedHand = new ArrayList<Card>();
+		
+		if (firstCard.getRankAsByte() > secondCard.getRankAsByte()) {
+			sortedHand.add(secondCard);
+			sortedHand.add(firstCard);
+			return sortedHand;
+		}
+		sortedHand.add(firstCard);
+		sortedHand.add(secondCard);
+		return sortedHand;
+	}
+
+
 	@Override
-	public boolean equals(Object hand) {
-		if (hand == null) {
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((firstCard == null) ? 0 : firstCard.hashCode());
+		result = prime * result + ((secondCard == null) ? 0 : secondCard.hashCode());
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null) 
+
+			return false;
+		if (getClass() != obj.getClass()) {
 			return false;
 		}
-	
 		
-		Hand inputHand = (Hand)hand;
+		Hand other = (Hand) obj;
 		
-		if ((inputHand.getFirstCard().equals(getFirstCard()) && inputHand.getSecondCard().equals(getSecondCard())) ||
-				inputHand.getFirstCard().equals(getSecondCard()) && inputHand.getSecondCard().equals(getFirstCard())) {
-			System.out.println("Not Unique!");
+		if ((other.getFirstCard().equals(this.getFirstCard()) || other.getSecondCard().equals(getSecondCard())) ||
+				other.getFirstCard().equals(getSecondCard()) || other.getSecondCard().equals(getFirstCard())) {
+			System.out.println("checking4");
 			return true;
 		}
+		
+		if (firstCard == null) {
+			if (other.firstCard != null)
+				return false;
+		} else if (!firstCard.equals(other.firstCard))
+			return false;
+		if (secondCard == null) {
+			if (other.secondCard != null)
+				return false;
+		} else if (!secondCard.equals(other.secondCard))
+			return false;
+		
+		
+		
 		return false;
 	}
+	
+
 
 }

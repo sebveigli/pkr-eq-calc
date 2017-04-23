@@ -1,25 +1,37 @@
 package persistence;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 public class Player {
-
-	private int handRanking;
-	private Set<Hand> hands = new HashSet<Hand>();
+	enum HandRank{HIGH_CARD, PAIR, TWO_PAIR, THREE_OF_A_KIND, STRAIGHT, FLUSH, FULL_HOUSE, FOUR_OF_A_KIND, STRAIGHT_FLUSH}
+	
+	private HandRank handRanking;
+	
+	private List<Card> madeHand = new ArrayList<Card>();
+	
+	private List<Hand> hands = new ArrayList<Hand>();
 	private int winCount;
 	private int tieCount;
 	
-	public Player(Set<Hand> hands) {
+	public Player(List<Hand> hands) {
 		winCount = 0;
 		tieCount = 0;
-		handRanking = 0;
+		handRanking = HandRank.HIGH_CARD;
 		this.hands = hands;
 	}
 	
-	public int getHandRanking() {
-		return handRanking;
-	}	
+	public void setMadeHand(List<Card> cards) {
+		madeHand.addAll(cards);
+	}
+	
+	public List<Card> getMadeHand() {
+		return madeHand;
+	}
+
 	
 	public int getWinCount() {
 		return winCount;
@@ -29,12 +41,16 @@ public class Player {
 		return tieCount;
 	}
 	
-	public Set<Hand> getHands() {
+	public List<Hand> getHands() {
 		return hands;
 	}
 	
 	public void setHandRanking(int newHandRank) {
-		handRanking = newHandRank;
+		handRanking = HandRank.values()[newHandRank];
+	}
+	
+	public int getHandRanking() {
+		return handRanking.ordinal();
 	}
 	
 	public void addWin() {
@@ -44,4 +60,12 @@ public class Player {
 	public void addTie() {
 		tieCount++;
 	}
+	
+	public Hand getRandomHand() {
+		Random rnd = new Random();
+		int random = rnd.nextInt(hands.size());
+		
+		return hands.get(random);
+	}
+	
 }

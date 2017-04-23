@@ -32,8 +32,8 @@ public class BoardTester {
 	public void validFiveCardBoardFlushAndStraight() throws InvalidHandException {
 		Board b = HandParserUtil.parseBoard("AcKh7h4c3c");
 		
-		Assert.assertEquals(true, b.getFlush());
-		Assert.assertEquals(true, b.getStraight());
+		Assert.assertEquals(true, b.hasFlush());
+		Assert.assertEquals(true, b.checkStraight());
 		Assert.assertEquals(5, b.getBoard().size());
 	}
 	
@@ -41,8 +41,8 @@ public class BoardTester {
 	public void validFiveCardBoardNoFlushNoStraight() throws InvalidHandException {
 		Board b = HandParserUtil.parseBoard("AcKh7h4c2d");
 		
-		Assert.assertEquals(false, b.getFlush());
-		Assert.assertEquals(false, b.getStraight());
+		Assert.assertEquals(false, b.hasFlush());
+		Assert.assertEquals(false, b.checkStraight());
 		Assert.assertEquals(5,  b.getBoard().size());
 	}
 	
@@ -60,25 +60,5 @@ public class BoardTester {
 	public void invalidLengthBoard() throws InvalidHandException {
 		Board b = HandParserUtil.parseBoard("AcKs");
 	}
-	
-	@Test
-	public void test() throws InvalidHandException {
-		GameRunUtil gru = new GameRunUtil("AA", "KK", "2d7c4h");
-		
-		for (int i = 0; i < 1000000; i++) {
-			gru.runMonteCarloSimulation();
-			
-			for (Card c : gru.getBoard()) {
-				System.out.print(Character.toString(c.getRankAsChar()) + Character.toString(c.getSuitAsChar()));
-			}
-			System.out.println("");
-			gru.reset();
-		}
-		for (int i = 0; i < gru.getFreqSize(); i++) {
-			System.out.println(i + ": " + gru.getFreq(i));
-		}
-		System.out.println();
-		
-		
-	}
+
 }

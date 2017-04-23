@@ -16,7 +16,7 @@ public class HandParserUtil {
 	// create a range of hands to return
 	private final static Set<Parser> parsers = new HashSet<Parser>();
 	
-	private static Set<Hand> parse(String input) throws InvalidHandException {
+	private static List<Hand> parse(String input) throws InvalidHandException {
 		parsers.add(new PairParser());
 		parsers.add(new OffsuitParser());
 		parsers.add(new SuitedParser());
@@ -38,8 +38,8 @@ public class HandParserUtil {
 		throw new InvalidHandException();
 	}
 	
-	public static Set<Hand> parseRange(String input) throws InvalidHandException {
-		Set<Hand> rangeToParse = new HashSet<Hand>();
+	public static List<Hand> parseRange(String input) throws InvalidHandException {
+		List<Hand> rangeToParse = new ArrayList<Hand>();
 		
 		Set<String> handsInList = new HashSet<String>(Arrays.asList(input.split("[\\s,]+")));
 		
@@ -55,7 +55,7 @@ public class HandParserUtil {
 		BoardParser parser = new BoardParser();
 		
 		String fInput = formatInput(input);
-		
+
 		if (parser.matches(fInput)) {
 			try {
 				return new Board(parser.parseBoard(fInput));

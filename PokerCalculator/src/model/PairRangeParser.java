@@ -1,6 +1,8 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import persistence.Hand;
@@ -18,8 +20,9 @@ public class PairRangeParser extends PairParser {
 	}
 
 	@Override
-	public Set<Hand> parse(String input) throws InvalidHandException {
-		Set<Hand> handToReturn = new HashSet<Hand>();
+	public List<Hand> parse(String input) throws InvalidHandException {
+		List<Hand> handToReturn = new ArrayList<Hand>();
+		
 		byte firstRank = Rank.parse(input.charAt(0)).getNumberFormat();
 		byte secondRank = Rank.parse(input.charAt(3)).getNumberFormat();
 		

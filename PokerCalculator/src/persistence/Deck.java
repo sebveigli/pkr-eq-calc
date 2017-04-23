@@ -13,23 +13,22 @@ import java.util.SortedSet;
 import model.InvalidHandException;
 
 public class Deck {
-	private Set<Card> deck;
-	private Set<Card> muckedDeck = new HashSet<Card>();
+	private List<Card> deck = new ArrayList<Card>();
+	private List<Card> muckedDeck = new ArrayList<Card>();
+	
+	private static final int SHUFFLE_CONSTANT = 7;
 	
 	public Deck() throws InvalidHandException {
-		List<Card> tmpDeck = new ArrayList<Card>();
-		
 		for (int i = 1; i <= 4; i++) {
 			for (int j = 2; j <= 14; j++) {
-				tmpDeck.add(new Card(Rank.parse((byte)j), Suit.parse((byte)i)));
+				//deck.add(new Card(Rank.parse((byte)2), Suit.parse((byte)2)));
+				deck.add(new Card(Rank.parse((byte)j), Suit.parse((byte)i)));
 			}
 		}
 		
-		for (int i = 0; i < 7; i++) {
-			tmpDeck = shuffle(tmpDeck);
-		}
-		
-		deck = new LinkedHashSet<Card>(tmpDeck);			
+		for (int i = 0; i < SHUFFLE_CONSTANT; i++) {
+			deck = shuffle(deck);
+		}	
 	}
 	
 	private List<Card> shuffle(List<Card> deck) {
@@ -37,11 +36,11 @@ public class Deck {
 		return deck;
 	}
 	
-	public Set<Card> getDeck() {
+	public List<Card> getDeck() {
 		return deck;
 	}
 	
-	public void muckCards(Set<Card> c) {
+	public void muckCards(List<Card> c) {
 		for (Card cur : c) {
 			if (deck.contains(cur)) {
 				deck.remove(cur);
@@ -57,7 +56,7 @@ public class Deck {
 		}
 	}
 	
-	public Set<Card> getMuck() {
+	public List<Card> getMuck() {
 		return muckedDeck;
 	}
 	

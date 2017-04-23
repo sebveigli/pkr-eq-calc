@@ -1,7 +1,9 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import persistence.Card;
@@ -18,8 +20,8 @@ public class BoardParser {
 			return false;
 	}
 
-	public Set<Card> parseBoard(String input) throws InvalidHandException {
-		Set<Card> cardsToReturn = new HashSet<Card>();
+	public List<Card> parseBoard(String input) throws InvalidHandException {
+		List<Card> cardsToReturn = new ArrayList<Card>();
 		
 		if (input.length() >= 6) {
 			Card firstCard = new Card(Rank.parse(input.charAt(0)), Suit.parse(input.charAt(1)));

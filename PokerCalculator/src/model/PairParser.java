@@ -1,6 +1,8 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import persistence.Card;
@@ -19,8 +21,8 @@ public class PairParser extends Parser{
 	}
 
 	@Override
-	public Set<Hand> parse(String input) throws InvalidHandException {
-		Set<Hand> range = new HashSet<Hand>();
+	public List<Hand> parse(String input) throws InvalidHandException {
+		List<Hand> range = new ArrayList<Hand>();
 		// We need to create a range of hands for every combination of pairs
 		// We have to cycle through every combination (4 Cards, 4 Suits)
 		// we have n choose k combinations

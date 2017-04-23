@@ -1,7 +1,9 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import persistence.Card;
@@ -21,8 +23,8 @@ public class HandParser extends Parser {
 	}
 
 	@Override
-	public Set<Hand> parse(String input) throws InvalidHandException {
-		Set<Hand> handToReturn = new HashSet<Hand>();
+	public List<Hand> parse(String input) throws InvalidHandException {
+		List<Hand> handToReturn = new ArrayList<Hand>();
 		
 		try {
 			Card firstCard = new Card(Rank.parse(input.charAt(0)), Suit.parse(input.charAt(1)));

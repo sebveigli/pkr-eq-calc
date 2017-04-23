@@ -1,7 +1,8 @@
 package model;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -12,11 +13,16 @@ import persistence.Hand;
 import persistence.Player;
 
 public class GameRunUtil {
-	private Set<Card> generatedCards = new HashSet<Card>();
+	private List<Card> generatedCards = new ArrayList<Card>();
 	private Board board;
 	
-	private Player playerOne;
-	private Player playerTwo;
+	private List<Hand> playerOne = new ArrayList<Hand>();
+	private List<Hand> playerTwo = new ArrayList<Hand>();
+	
+	private Hand h1;
+	private Hand h2;
+	
+	private int max;
 	
 	private Deck gameDeck = new Deck();
 	
@@ -30,30 +36,22 @@ public class GameRunUtil {
 	// store wins player 1 and 2
 
 	public GameRunUtil(String playerOneRange, String playerTwoRange, String board) throws InvalidHandException {
-		playerOne = new Player(HandParserUtil.parseRange(playerOneRange));
-		playerTwo = new Player(HandParserUtil.parseRange(playerTwoRange));
+		playerOne.addAll(HandParserUtil.parseRange(playerOneRange));
+		playerTwo.addAll(HandParserUtil.parseRange(playerTwoRange));
 		this.board = HandParserUtil.parseBoard(board);
-		
-		
+		max = 0;
 	}
 	
-	public void runMonteCarloSimulation() throws InvalidHandException {
-		gameDeck.muckCards(board.getBoard());
-		
-		switch (board.getBoard().size()) {
-		case 0:
-			generateCards(5);
-			break;
-		case 3:
-			generateCards(2);
-			break;
-		case 4:
-			generateCards(1);
-			break;
-		case 5:
-			break;
-		}
+	public int getMax() {
+		return max;
 	}
+	
+	public void testMonte() throws InvalidHandException {
+		MonteCarloSimulation mcs = new MonteCarloSimulation(playerOne, playerTwo, board);
+		mcs.run();
+	}
+	
+	
 	
 	private void generateCards(int amount) {
 		for (int i = 0; i < amount; i++) {
@@ -73,7 +71,7 @@ public class GameRunUtil {
 		}
 	}
 	
-	public Set<Card> getBoard() {
+	public List<Card> getBoard() {
 		return board.getBoard();
 	}
 	

@@ -1,7 +1,9 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import persistence.Card;
@@ -20,8 +22,8 @@ public class OffsuitParser extends Parser{
 	}
 
 	@Override
-	public Set<Hand> parse(String input) throws InvalidHandException {
-		Set<Hand> handToReturn = new HashSet<Hand>();
+	public List<Hand> parse(String input) throws InvalidHandException {
+		List<Hand> handToReturn = new ArrayList<Hand>();
 		for (int i = 1; i <= 4; i++) {
 			for (int j = 1; j <= 4; j++) {
 				if (i != j) { 

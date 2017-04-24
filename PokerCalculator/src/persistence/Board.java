@@ -10,7 +10,7 @@ import java.util.Set;
 
 public class Board {
 
-	private List<Card> board = new ArrayList<Card>();
+	private List<Card> board;
 	
 	private byte flushSuit;
 	
@@ -23,6 +23,7 @@ public class Board {
 	private boolean hasTrips;
 	private boolean hasQuads;
 	private boolean hasFlush;
+	private boolean hasTwoPair;
 	
 	
 	public Board(List<Card> board) {
@@ -32,6 +33,7 @@ public class Board {
 			this.board.sort(Comparator.comparing(Card::getRankAsByte));
 			checkPairs();
 			checkFlush();
+			checkStraight();
 		}
 	}
 	
@@ -39,19 +41,23 @@ public class Board {
 		return hasFlush;
 	}
 	
+	public boolean hasTwoPair() {
+		return hasTwoPair;
+	}
+	
 	public byte getFlushSize() {
 		return flushSize;
 	}
 	
-	public boolean getPair() {
+	public boolean hasPair() {
 		return hasPair;
 	}
 	
-	public boolean getTrips() {
+	public boolean hasTrips() {
 		return hasTrips;
 	}
 	
-	public boolean getQuads() {
+	public boolean hasQuads() {
 		return hasQuads;
 	}
 	
@@ -88,15 +94,34 @@ public class Board {
 				}
 			}
 		}
-		System.out.println("flush size: " + flushSize);
 	}
 	
 	public boolean checkStraight() {
-		for (int i = 0; i < 2; i++) {
-			if (board.get(i+2).getRankAsByte() - board.get(i).getRankAsByte() <= 4) {
-				return true;
+		Set<Byte> noDupes = new LinkedHashSet<Byte>();
+		
+		for (Card c : board) {
+			noDupes.add(c.getRankAsByte());
+		}
+		
+		if (noDupes.size() > 2) {
+			for (int i = 0; i < (noDupes.size() - 2); i++) {
+				if (board.get(i+2).getRankAsByte() - board.get(i).getRankAsByte() <= 4) {
+					return true;
+				} 
+			}
+		} else return false;
+		
+		// check if ace exists on the board, if yes, then let Ace = 1 and check with 2nd element
+		if (checkAce()) {
+			int counter = 0;
+			for (Byte c : noDupes) {
+				if (counter == 1 && c - 1 <= 4) {
+					return true;
+				} else
+					counter++;
 			}
 		}
+		
 		return false;
 	}
 	
@@ -157,11 +182,8 @@ public class Board {
 			this.board.sort(Comparator.comparing(Card::getRankAsByte));
 			checkPairs();
 			checkFlush();
+			checkStraight();
 		}
-	}
-	
-	public void removeCard(Card c) {
-		if (board.contains(c)) board.remove(c);
 	}
 	
 	@Override

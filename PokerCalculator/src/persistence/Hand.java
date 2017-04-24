@@ -104,22 +104,18 @@ public class Hand {
 		
 		if ((other.getFirstCard().equals(this.getFirstCard()) || other.getSecondCard().equals(getSecondCard())) ||
 				other.getFirstCard().equals(getSecondCard()) || other.getSecondCard().equals(getFirstCard())) {
-			System.out.println("checking4");
 			return true;
 		}
 		
-		if (firstCard == null) {
-			if (other.firstCard != null)
-				return false;
-		} else if (!firstCard.equals(other.firstCard))
+		if (firstCard == null && other.firstCard != null) 
 			return false;
-		if (secondCard == null) {
-			if (other.secondCard != null)
-				return false;
-		} else if (!secondCard.equals(other.secondCard))
+		else if (!firstCard.equals(other.firstCard))
 			return false;
 		
-		
+		if (secondCard == null && other.secondCard != null) 
+			return false;
+		else if (!secondCard.equals(other.secondCard))
+			return false;
 		
 		return false;
 	}

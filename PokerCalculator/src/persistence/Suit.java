@@ -15,7 +15,6 @@ public enum Suit {
 
 	public static Suit parse(byte numberFormat) throws InvalidHandException {
 		if (numberFormat < 1 || numberFormat > 4) {
-			System.out.println("Suit: " + numberFormat);
 			throw new InvalidHandException("Invalid Hand: Invalid Suit.");
 		}
 		return values()[numberFormat - 1];

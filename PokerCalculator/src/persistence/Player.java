@@ -6,18 +6,21 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-public class Player {
-	enum HandRank{HIGH_CARD, PAIR, TWO_PAIR, THREE_OF_A_KIND, STRAIGHT, FLUSH, FULL_HOUSE, FOUR_OF_A_KIND, STRAIGHT_FLUSH}
-	
+public class Player {	
 	private HandRank handRanking;
 	
-	private List<Card> madeHand = new ArrayList<Card>();
+	private List<Card> madeHand;
 	
-	private List<Hand> hands = new ArrayList<Hand>();
+	private List<Hand> hands;
 	private int winCount;
 	private int tieCount;
 	
+	private Random rnd = new Random();
+	
 	public Player(List<Hand> hands) {
+		this.madeHand = new ArrayList<Card>();
+		this.hands = new ArrayList<Hand>();
+		
 		winCount = 0;
 		tieCount = 0;
 		handRanking = HandRank.HIGH_CARD;
@@ -62,7 +65,6 @@ public class Player {
 	}
 	
 	public Hand getRandomHand() {
-		Random rnd = new Random();
 		int random = rnd.nextInt(hands.size());
 		
 		return hands.get(random);

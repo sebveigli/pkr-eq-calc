@@ -2,16 +2,15 @@ package tests;
 
 import java.util.Arrays;
 
+import org.junit.Assert;
 import org.junit.Test;
 
-import junit.framework.Assert;
 import model.GameRunUtil;
 import model.HandParserUtil;
 import model.InvalidHandException;
 import persistence.Board;
 import persistence.Card;
 
-@SuppressWarnings("deprecation")
 public class BoardTester {
 
 	@Test
@@ -39,7 +38,7 @@ public class BoardTester {
 	
 	@Test
 	public void validFiveCardBoardNoFlushNoStraight() throws InvalidHandException {
-		Board b = HandParserUtil.parseBoard("AcKh7h4c2d");
+		Board b = HandParserUtil.parseBoard("AcKh7h6c2d");
 		
 		Assert.assertEquals(false, b.hasFlush());
 		Assert.assertEquals(false, b.checkStraight());

@@ -41,12 +41,10 @@ public class HandParserUtil {
 	public static List<Hand> parseRange(String input) throws InvalidHandException {
 		List<Hand> rangeToParse = new ArrayList<Hand>();
 		
-		Set<String> handsInList = new HashSet<String>(Arrays.asList(input.split("[\\s,]+")));
+		String[] handsInList = input.split("[\\s,]+");
 		
-		Iterator<String> it = handsInList.iterator();
-		
-		while (it.hasNext()) {
-			rangeToParse.addAll(parse(it.next()));
+		for (String h : handsInList) {
+			rangeToParse.addAll(parse(h));
 		}
 		return rangeToParse;
 	}

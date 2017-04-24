@@ -24,7 +24,6 @@ public enum Rank {
 
 	public static Rank parse(byte numberFormat) throws InvalidHandException {
 		if (numberFormat < 2 || numberFormat > 14) {
-			System.out.println("Rank: " + numberFormat);
 			throw new InvalidHandException("Invalid Hand: Invalid Suit.");
 		}
 		return values()[numberFormat - 2];

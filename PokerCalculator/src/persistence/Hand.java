@@ -1,5 +1,6 @@
 package persistence;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -117,7 +118,5 @@ public class Hand {
 		
 		return false;
 	}
-	
-
 
 }

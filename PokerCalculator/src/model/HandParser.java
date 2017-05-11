@@ -34,6 +34,4 @@ public class HandParser extends Parser {
 			throw new InvalidHandException();
 		}
 		return handToReturn;
-	}
-
 }

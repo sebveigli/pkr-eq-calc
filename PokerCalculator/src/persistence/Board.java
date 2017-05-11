@@ -1,9 +1,8 @@
 package persistence;
 
 import java.util.ArrayList;
-import java.util.Collections;
+
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -14,10 +13,10 @@ public class Board {
 	
 	private byte flushSuit;
 	
-	private byte pairRank;
+	private List<Byte> pairRanks;
+	
 	private byte tripRank;
 	private byte quadRank;
-	private byte flushSize;
 	
 	private boolean hasPair;
 	private boolean hasTrips;
@@ -29,8 +28,31 @@ public class Board {
 	public Board(List<Card> board) {
 		this.board = board;
 		
+		pairRanks = new ArrayList<Byte>();
+		
 		if (this.board.size() == 5) {
 			this.board.sort(Comparator.comparing(Card::getRankAsByte));
+			checkPairs();
+			checkFlush();
+			checkStraight();
+		}
+	}
+	
+	public void reset() {
+		hasPair = false;
+		hasTrips = false;
+		hasQuads = false;
+		hasFlush = false;
+		hasTwoPair = false;
+		
+		flushSuit = 0;
+		tripRank = 0;
+		quadRank = 0;
+		
+		
+		pairRanks.clear();
+		
+		if (board.size() == 5) {
 			checkPairs();
 			checkFlush();
 			checkStraight();
@@ -43,10 +65,6 @@ public class Board {
 	
 	public boolean hasTwoPair() {
 		return hasTwoPair;
-	}
-	
-	public byte getFlushSize() {
-		return flushSize;
 	}
 	
 	public boolean hasPair() {
@@ -62,7 +80,12 @@ public class Board {
 	}
 	
 	public byte getPairRank() {
-		return pairRank;
+		
+		return pairRanks.get(0);
+	}
+	
+	public byte getPairRank2() {
+		return pairRanks.get(1);
 	}
 	
 	public byte getTripRank() {
@@ -86,21 +109,25 @@ public class Board {
 				}
 				if (sameSuitCount >= 3) {
 					hasFlush = true;
-					if ((byte)sameSuitCount > flushSize) {
-						flushSize = (byte)sameSuitCount;
-						flushSuit = currentSuit;
-					}
+					
+					flushSuit = currentSuit;
 					
 				}
 			}
 		}
 	}
 	
+	public void removeCard(Card c) {
+		board.remove(c);
+	}
+	
+	
+	
 	public boolean checkStraight() {
-		Set<Byte> noDupes = new LinkedHashSet<Byte>();
+		List<Byte> noDupes = new ArrayList<Byte>();
 		
 		for (Card c : board) {
-			noDupes.add(c.getRankAsByte());
+			if (!noDupes.contains(c.getRankAsByte())) noDupes.add(c.getRankAsByte());
 		}
 		
 		if (noDupes.size() > 2) {
@@ -112,16 +139,11 @@ public class Board {
 		} else return false;
 		
 		// check if ace exists on the board, if yes, then let Ace = 1 and check with 2nd element
-		if (checkAce()) {
-			int counter = 0;
-			for (Byte c : noDupes) {
-				if (counter == 1 && c - 1 <= 4) {
-					return true;
-				} else
-					counter++;
-			}
+		if (checkAce() && noDupes.size() > 2) {
+			if (noDupes.get(2) - noDupes.get(0) <= 3) {
+				return true;
+			} return false;
 		}
-		
 		return false;
 	}
 	
@@ -139,7 +161,11 @@ public class Board {
 					
 					if (combosFound == 2) {
 						hasPair = true;
-						pairRank = currentRank;
+						pairRanks.add(currentRank);
+						
+						if (pairRanks.size() == 2) {
+							hasTwoPair = true;
+						}
 					} else if (combosFound == 3) {
 						hasTrips = true;
 						tripRank = currentRank;

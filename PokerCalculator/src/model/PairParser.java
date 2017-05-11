@@ -1,10 +1,8 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
+import java.util.List;
 import persistence.Card;
 import persistence.Hand;
 import persistence.Rank;
@@ -23,58 +21,33 @@ public class PairParser extends Parser{
 	@Override
 	public List<Hand> parse(String input) throws InvalidHandException {
 		List<Hand> range = new ArrayList<Hand>();
-		// We need to create a range of hands for every combination of pairs
-		// We have to cycle through every combination (4 Cards, 4 Suits)
-		// we have n choose k combinations
-		// for all combinations of cards/suits without repetition, n = 4, k = 2
 		
-		// General formula (n * (n - 1) * ... * (n - k + 1))/(1*2*...*k)
-
-		int n = 4; 	// 4 elements (4 suits in the deck [Clubs, Diamonds, Hearts,
-					// 									Spades])
-		int k = 2; // 2 choices (we want a pair suits without repetition)
-
-		int[] nextRes = new int[] { 0, 1 }; // nextRes[i] is the index for the
-													// number for i-th combination
-		int firstSuit = 0; // Variables for storing the two generated suits
-		int secondSuit = 0;
-		boolean allCombosReached = false;
-
-			while (!allCombosReached) {
-				firstSuit = nextRes[0] + 1;
-				secondSuit = nextRes[1] + 1;
-				//System.out.println("Card: " + Character.toString(card) + ". firstSuit & secondSuit: " + Integer.toString(firstSuit) + Integer.toString(secondSuit));
-
-				//Hand newHand = new Hand(new Rank(card), Suit.parse((byte) firstSuit), new Rank(card),
-				//		Suit.parse((byte) secondSuit));
-				Card firstCard = new Card(Rank.parse(input.charAt(0)), Suit.parse((byte)firstSuit));
-				Card secondCard = new Card(Rank.parse(input.charAt(0)), Suit.parse((byte)secondSuit));
-					
-					
-				//System.out.println(Byte.toString(firstCard.getRankAsByte()));
-				Hand newHand = new Hand(firstCard, secondCard);
-					
-				range.add(newHand);
-
-				// Increment the k-1th element
-				int i = k - 1;
-				++nextRes[i];
-
-				while ((i > 0) && (nextRes[i] >= n - k + 1 + i)) {
-					--i;
-					++nextRes[i];
-				}
-
-				// If nextRes[0] is > 2, we have found all combinations
-				if (nextRes[0] > n - k) {
-					allCombosReached = true;
-				} else {
-					for (i = i + 1; i < k; ++i) {
-						nextRes[i] = nextRes[i - 1] + 1;
-					}
-				}
-			}
-	return range;
+		Card p1c1 = new Card(Rank.parse(input.charAt(0)), Suit.parse('c'));
+		Card p1c2 = new Card(Rank.parse(input.charAt(0)), Suit.parse('d'));
+		
+		Card p2c1 = new Card(Rank.parse(input.charAt(0)), Suit.parse('c'));
+		Card p2c2 = new Card(Rank.parse(input.charAt(0)), Suit.parse('h'));
+		
+		Card p3c1 = new Card(Rank.parse(input.charAt(0)), Suit.parse('c'));
+		Card p3c2 = new Card(Rank.parse(input.charAt(0)), Suit.parse('s'));
+		
+		Card p4c1 = new Card(Rank.parse(input.charAt(0)), Suit.parse('d'));
+		Card p4c2 = new Card(Rank.parse(input.charAt(0)), Suit.parse('h'));
+		
+		Card p5c1 = new Card(Rank.parse(input.charAt(0)), Suit.parse('d'));
+		Card p5c2 = new Card(Rank.parse(input.charAt(0)), Suit.parse('s'));
+		
+		Card p6c1 = new Card(Rank.parse(input.charAt(0)), Suit.parse('h'));
+		Card p6c2 = new Card(Rank.parse(input.charAt(0)), Suit.parse('s'));
+		
+		
+		range.add(new Hand(p1c1,p1c2));
+		range.add(new Hand(p2c1,p2c2));
+		range.add(new Hand(p3c1,p3c2));
+		range.add(new Hand(p4c1,p4c2));
+		range.add(new Hand(p5c1,p5c2));
+		range.add(new Hand(p6c1,p6c2));
+		
+		return range;
 	}
-
 }

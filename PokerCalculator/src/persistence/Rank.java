@@ -24,6 +24,7 @@ public enum Rank {
 
 	public static Rank parse(byte numberFormat) throws InvalidHandException {
 		if (numberFormat < 2 || numberFormat > 14) {
+			System.out.println("Invalid Rank");
 			throw new InvalidHandException("Invalid Hand: Invalid Suit.");
 		}
 		return values()[numberFormat - 2];
@@ -33,6 +34,7 @@ public enum Rank {
 		int indexOfGotten = ALL_SUITS_PATTERN.indexOf(charFormat);
 
 		if (indexOfGotten == -1) {
+			System.out.println("Invalid Rank");
 			throw new InvalidHandException("Invalid Hand: Invalid Suit.");
 		}
 		return values()[indexOfGotten];

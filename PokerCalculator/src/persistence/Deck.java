@@ -1,14 +1,11 @@
 package persistence;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.SortedSet;
+import java.util.Random;
 
 import model.InvalidHandException;
 
@@ -16,21 +13,21 @@ public class Deck {
 	private List<Card> deck;
 	private List<Card> muckedDeck;
 	
-	private static final int SHUFFLE_CONSTANT = 7;
+	private Random rnd;
 	
 	public Deck() throws InvalidHandException {
 		deck = new ArrayList<Card>();
 		muckedDeck = new ArrayList<Card>();
 		
-		for (int i = 1; i <= Suit.values().length; i++) {
-			for (int j = 2; j <= Rank.values().length; j++) {
+		rnd = new Random();
+		
+		for (int i = 1; i <= 4; i++) {
+			for (int j = 2; j <= 14; j++) {
 				deck.add(new Card(Rank.parse((byte)j), Suit.parse((byte)i)));
 			}
 		}
 		
-		for (int i = 0; i < SHUFFLE_CONSTANT; i++) {
-			Collections.shuffle(deck);
-		}	
+		Collections.shuffle(deck);
 	}
 	
 	public List<Card> getDeck() {
@@ -69,5 +66,18 @@ public class Deck {
 		if (muckedDeck.remove(c)) {
 			deck.add(c);
 		}
+	}
+	
+	public void reset() {
+		deck.addAll(muckedDeck);
+		muckedDeck.clear();
+	}
+	
+	public void shuffle() {
+		Collections.shuffle(deck);
+	}
+	
+	public Card dealRandomCard() {
+		return deck.get(rnd.nextInt(deck.size()));
 	}
 }

@@ -1,17 +1,15 @@
 package persistence;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class Hand {
 	private Card firstCard;
 	private Card secondCard;
 
 	public Hand(Card first, Card second) {
-			firstCard = first;
-			secondCard = second;
+		firstCard = first;
+		secondCard = second;
 	}
 	
 

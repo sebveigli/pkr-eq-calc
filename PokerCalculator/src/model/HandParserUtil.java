@@ -1,20 +1,17 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 import persistence.Board;
-import persistence.Card;
 import persistence.Hand;
 
 public class HandParserUtil {
 	// create a range of hands to return
 	private final static Set<Parser> parsers = new HashSet<Parser>();
+	private final static List<Hand> handsAdded = new ArrayList<Hand>();
 	
 	private static List<Hand> parse(String input) throws InvalidHandException {
 		parsers.add(new PairParser());
@@ -28,6 +25,7 @@ public class HandParserUtil {
 		
 		for (Parser p : parsers) {
 			if (p.matches(fInput)) {
+				
 				try {
 					return p.parse(fInput);
 				} catch (InvalidHandException e) {
@@ -39,14 +37,15 @@ public class HandParserUtil {
 	}
 	
 	public static List<Hand> parseRange(String input) throws InvalidHandException {
-		List<Hand> rangeToParse = new ArrayList<Hand>();
+		Set<Hand> rangeToParse = new HashSet<Hand>();
 		
 		String[] handsInList = input.split("[\\s,]+");
 		
 		for (String h : handsInList) {
 			rangeToParse.addAll(parse(h));
 		}
-		return rangeToParse;
+		
+		return new ArrayList<Hand>(rangeToParse);
 	}
 	
 	public static Board parseBoard(String input) throws InvalidHandException {

@@ -1,57 +1,47 @@
 package persistence;
 
-public class Suit {
-	private int suit;
-	
-	public Suit(int suit) {
-		switch(suit) {
-		case 1:
-			this.suit = 1;
-			break;
-		case 2:
-			this.suit = 2;
-			break;
-		case 3:
-			this.suit = 3;
-			break;
-		case 4:
-			this.suit = 4;
-			break;
+import model.InvalidHandException;
+
+public enum Suit {
+	CLUBS((byte) 1, 'c'), 
+	DIAMONDS((byte) 2, 'd'), 
+	HEARTS((byte) 3, 'h'), 
+	SPADES((byte) 4, 's');
+
+	private static final String ALL_SUITS_PATTERN = "cdhs";
+
+	private byte numberFormat;
+	private char charFormat;
+
+	public static Suit parse(byte numberFormat) throws InvalidHandException {
+		if (numberFormat < 1 || numberFormat > 4) {
+			System.out.println("Invalid Suiit");
+			throw new InvalidHandException("Invalid Hand: Invalid Suit.");
 		}
+		return values()[numberFormat - 1];
 	}
-	
-	public Suit(char s) {
-		switch(s) {
-		case 'c':
-			this.suit = 1;
-			break;
-		case 'd':
-			this.suit = 2;
-			break;
-		case 'h':
-			this.suit = 3;
-			break;
-		case 's':
-			this.suit = 4;
-			break;
+
+	public static Suit parse(char charFormat) throws InvalidHandException {
+		int indexOfGotten = ALL_SUITS_PATTERN.indexOf(charFormat);
+		if (indexOfGotten == -1) {
+			System.out.println("Invalid Suit");
+			throw new InvalidHandException("Invalid Hand: Invalid Suit.");
 		}
+		return values()[indexOfGotten];
 	}
-	
-	public char getSuitChar() {
-		switch (this.suit) {
-		case 1:
-			return 'c';
-		case 2:
-			return 'd';
-		case 3:
-			return 'h';
-		case 4:
-			return 's';
-		}
-		return 'x';
+
+	private Suit(byte numberFormat, char shortened) {
+		this.numberFormat = numberFormat;
+		this.charFormat = shortened;
 	}
-	
-	public int getSuitInt() {
-		return this.suit;
+
+	public byte getNumberFormat() {
+		return numberFormat;
 	}
+
+	public char getCharFormat() {
+		return charFormat;
+	}
+
 }
+

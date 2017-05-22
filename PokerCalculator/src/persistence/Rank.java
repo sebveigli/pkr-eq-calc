@@ -2,95 +2,54 @@ package persistence;
 
 import model.InvalidHandException;
 
-public class Rank {
+public enum Rank {
+	TWO((byte) 2, '2'), 
+	THREE((byte) 3, '3'), 
+	FOUR((byte) 4, '4'), 
+	FIVE((byte) 5, '5'),
+	SIX((byte) 6, '6'),
+	SEVEN((byte) 7, '7'),
+	EIGHT((byte) 8, '8'), 
+	NINE((byte) 9, '9'), 
+	TEN((byte) 10, 'T'), 
+	JACK((byte) 11, 'J'), 
+	QUEEN((byte) 12, 'Q'), 
+	KING((byte) 13, 'K'), 
+	ACE((byte) 14, 'A');
 	
-	private int cardRank;
-	
-	public Rank() {
-		
-	}
-	
-	public Rank(char rank) {
-		switch(rank) {
-		case '2':
-			this.cardRank = 2;
-			break;
-		case '3':
-			this.cardRank = 3;
-			break;
-		case '4':
-			this.cardRank = 4;
-			break;
-		case '5':
-			this.cardRank = 5;
-			break;
-		case '6':
-			this.cardRank = 6;
-			break;
-		case '7':
-			this.cardRank = 7;
-			break;
-		case '8':
-			this.cardRank = 8;
-			break;
-		case '9':
-			this.cardRank = 9;
-			break;
-		case 'T':
-			this.cardRank = 10;
-			break;
-		case 'J':
-			this.cardRank = 11;
-			break;
-		case 'Q':
-			this.cardRank = 12;
-			break;
-		case 'K':
-			this.cardRank = 13;
-			break;
-		case 'A':
-			this.cardRank = 14;
-			break;
+	private static final String ALL_SUITS_PATTERN = "23456789TJQKA";
+
+	private byte numberFormat;
+	private char charFormat;
+
+	public static Rank parse(byte numberFormat) throws InvalidHandException {
+		if (numberFormat < 2 || numberFormat > 14) {
+			System.out.println("Invalid Rank");
+			throw new InvalidHandException("Invalid Hand: Invalid Suit.");
 		}
+		return values()[numberFormat - 2];
 	}
-	
-	public Rank(int rank){
-		this.cardRank = rank;
-	}
-	
-	public char getCardChar() {
-		switch (this.cardRank) {
-		case 2:
-			return '2';
-		case 3:
-			return '3';
-		case 4:
-			return '4';
-		case 5:
-			return '5';
-		case 6:
-			return '6';
-		case 7:
-			return '7';
-		case 8:
-			return '8';
-		case 9:
-			return '9';
-		case 10:
-			return 'T';
-		case 11:
-			return 'J';
-		case 12:
-			return 'Q';
-		case 13:
-			return 'K';
-		case 14:
-			return 'A';	
+
+	public static Rank parse(char charFormat) throws InvalidHandException {
+		int indexOfGotten = ALL_SUITS_PATTERN.indexOf(charFormat);
+
+		if (indexOfGotten == -1) {
+			System.out.println("Invalid Rank");
+			throw new InvalidHandException("Invalid Hand: Invalid Suit.");
 		}
-		return 'x';
+		return values()[indexOfGotten];
 	}
 	
-	public int getCardInt() {
-		return this.cardRank;
+	private Rank(byte numberFormat, char shortened) {
+		this.numberFormat = numberFormat;
+		this.charFormat = shortened;
+	}
+	
+	public byte getNumberFormat() {
+		return numberFormat;
+	}
+
+	public char getCharFormat() {
+		return charFormat;
 	}
 }

@@ -1,4 +1,4 @@
-Poker Equity Calculator
+# Poker Equity Calculator
 
 This was a project written by me back in 2017.
 
